@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <style>
+        #list {
+            background-color: rgb(221, 191, 18);
+            height: 600px;
+            width: 600px;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        #list2 {
+            background-color: rgb(177, 152, 9);
+            height: 600px;
+            width: 800px;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .list-item {
+            list-style: none;
+            background-color: white;
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="list">
+        <ul id="list2"></ul>
+    </ul>
+
+    <button id="add-item">Add Child</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+<script>
+    var list = $("#list");
+    var list2 = $("#list2");
+    var cnt_list = 0
+
+    var updateLayout = function(listItems) {
+        for (var i = 0; i < listItems.length; i++) {
+            var offsetAngle = 360 / listItems.length;
+            var rotateAngle = offsetAngle * i;
+            $(listItems[i]).css("transform", "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg)")
+        };
+    };
+
+    $(document).on("click", "#add-item", function() {
+        var listItem = $("<li class='list-item'><img src='images/yaa.png' style='width:50px;height:50px'/><button class='remove-item'>Remove</button></li>");
+        if (cnt_list < 10) {
+            list.append(listItem);
+            cnt_list += 1
+        } else {
+            list2.append(listItem);
+        }
+        var listItems = $(".list-item");
+        updateLayout(listItems);
+    });
+
+    $(document).on("click", ".remove-item", function() {
+        $(this).parent().remove();
+        var listItems = $(".list-item");
+        updateLayout(listItems);
+    });
+</script>
+
+</html>
